@@ -110,6 +110,7 @@ sub get_dumpable_object {
       map {
         $as->apply_edits($_);
         $as->lazy_load_transcript($_);
+        $as->prefetch_mapper_coords($_);
         $self->clean_transcript($_);
         $_
       }

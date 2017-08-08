@@ -651,6 +651,22 @@ sub prefetch_translation_ids {
   return $tr;
 }
 
+sub prefetch_mapper_coords {
+  my $self = shift;
+  my $tr = shift;
+
+  my $vep_cache = $tr->{_variation_effect_feature_cache} ||= {};
+
+  my $exons  = $vep_cache->{sorted_exons} ||= [sort {$a->start <=> $b->start} @{$tr->get_all_Exons}];
+  my $mapper = $vep_cache->{mapper} ||= $tr->get_TranscriptMapper;
+
+  foreach my $exon(@$exons) {
+    foreach my $pos($exon->seq_region_start..$exon->seq_region_end) {
+      $mapper->genomic2pep($pos, $pos, $tr->strand);
+    }
+  }
+}
+
 
 =head2 info
 
