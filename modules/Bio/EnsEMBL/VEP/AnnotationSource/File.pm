@@ -78,6 +78,7 @@ BEGIN {
 
     eval q{
       use Bio::EnsEMBL::VEP::AnnotationSource::File::BED;
+      use Bio::EnsEMBL::VEP::AnnotationSource::File::BEDbase;
       use Bio::EnsEMBL::VEP::AnnotationSource::File::VCF;
       use Bio::EnsEMBL::VEP::AnnotationSource::File::GFF;
       use Bio::EnsEMBL::VEP::AnnotationSource::File::GTF;
@@ -99,6 +100,7 @@ my %FORMAT_MAP = (
   'gtf'     => 'GTF',
   'bed'     => 'BED',
   'bigwig'  => 'BigWig',
+  'bedbase' => 'BEDbase'
 );
 
 my %VALID_TYPES = (
