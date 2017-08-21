@@ -107,8 +107,6 @@ sub _record_overlaps_VF {
   my $parser = $self->parser();
   my ($vs, $ve) = ($vf->{start}, $vf->{end});
 
-  $DB::single = 1;
-
   # can't do insertions
   return 0 unless $vs <= $ve;
 
@@ -116,7 +114,7 @@ sub _record_overlaps_VF {
 
   if(overlap($ps, $parser->get_end, $vs, $ve)) {
     my @values = split(",", $parser->get_name);
-    return [map {$values[$_+1]} grep {$_ >= 0 && $_ <= $#values} (($vs - $ps)..($ve - $ps))]; 
+    return [map {$values[$_]} grep {$_ >= 0 && $_ <= $#values} (($vs - $ps)..($ve - $ps))]; 
   }
   else {
     return 0;
