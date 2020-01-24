@@ -114,6 +114,13 @@ sub configure {
         $f =~ s/$&/Consequence is_child/g;
         $changed = 1;
       }
+      elsif($f =~ m/(annotation)\sis(_child)?/i) {
+        $f =~ s/$&/Annotation is_child/g;
+        $changed = 1;
+      }
+      elsif($f =~ /is_child/) {
+        $changed = 1;
+      }
     }
 
     $config->{filter_set} = Bio::EnsEMBL::VEP::FilterSet->new(@{$config->{filter}});
@@ -319,8 +326,8 @@ sub parse_headers {
       my $vcf_info_field = $config->{vcf_info_field};
 
       if($raw_header =~ /INFO\=\<ID\=($vcf_info_field)\,/) {
-        $raw_header =~ m/Format\: (.+?)\"/;
-        $config->{headers} = [split '\|', $1];
+        $raw_header =~ m/F.+?\: (.+?)\"/;
+        $config->{headers} = [map {s/[\s\']//g; $_} split '\|', $1];
       }
       elsif($raw_header =~ /INFO\=\<ID\=(.+?)\,/) {
         $config->{allowed_fields}->{$1} = 1;
